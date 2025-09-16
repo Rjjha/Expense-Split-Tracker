@@ -1,0 +1,609 @@
+{
+	"info": {
+		"_postman_id": "expense-split-tracker-api",
+		"name": "Expense Split Tracker API",
+		"description": "API collection for the Expense Split Tracker application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by UUID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/{{user_uuid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{user_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/by-email?email=john.doe@example.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"by-email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "john.doe@example.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+				
+			]
+		},
+		{
+			"name": "Groups",
+			"item": [
+				{
+					"name": "Create Group - Trip to Paris",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    pm.globals.set(\"group_uuid\", response.data.uuid);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Trip to Paris\",\n  \"description\": \"Expenses for our Paris vacation\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/groups?creator_uuid={{user1_uuid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"groups"
+							],
+							"query": [
+								{
+									"key": "creator_uuid",
+									"value": "{{user1_uuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Member to Group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_uuid\": \"{{user2_uuid}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/groups/{{group_uuid}}/members",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"groups",
+								"{{group_uuid}}",
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group Members",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/groups/{{group_uuid}}/members",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"groups",
+								"{{group_uuid}}",
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/groups/{{group_uuid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"groups",
+								"{{group_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/groups?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": ["api","v1","groups"],
+							"query": [
+								{"key":"page","value":"1"},
+								{"key":"limit","value":"10"}
+							]
+						}
+					},
+					"response": []
+				},
+				
+				{
+					"name": "Remove Member from Group",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {"raw":"{{base_url}}/api/v1/groups/{{group_uuid}}/members/{{user2_uuid}}","host":["{{base_url}}"],"path":["api","v1","groups","{{group_uuid}}","members","{{user2_uuid}}"]}
+					},
+					"response": []
+				},
+				
+				{
+					"name": "Get User's Groups",
+					"request": {"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/users/{{user1_uuid}}/groups?page=1&limit=10","host":["{{base_url}}"],"path":["api","v1","users","{{user1_uuid}}","groups"],"query":[{"key":"page","value":"1"},{"key":"limit","value":"10"}]}},
+					"response": []
+				},
+				{
+					"name": "Get Group Balance Sheet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/groups/{{group_uuid}}/balance-sheet",
+							"host": ["{{base_url}}"],
+							"path": ["api","v1","groups","{{group_uuid}}","balance-sheet"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Expenses",
+			"item": [
+				{
+					"name": "Create Expense",
+					"request": {"method":"POST","header":[{"key":"Content-Type","value":"application/json"},{"key":"Idempotency-Key","value":"{{idempotency_key}}"}],"body":{"mode":"raw","raw":"{\n  \"group_uuid\": \"{{group_uuid}}\",\n  \"paid_by_uuid\": \"{{user1_uuid}}\",\n  \"amount\": \"90.00\",\n  \"currency\": \"USD\",\n  \"description\": \"Dinner\",\n  \"split_type\": \"equal\",\n  \"splits\": [{\"user_uuid\": \"{{user1_uuid}}\"},{\"user_uuid\": \"{{user2_uuid}}\"},{\"user_uuid\": \"{{user3_uuid}}\"}]\n}"},"url":{"raw":"{{base_url}}/api/v1/expenses","host":["{{base_url}}"],"path":["api","v1","expenses"]}},
+					"response": []
+				},
+				{
+					"name": "List Expenses",
+					"request": {"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/expenses?page=1&limit=10","host":["{{base_url}}"],"path":["api","v1","expenses"],"query":[{"key":"page","value":"1"},{"key":"limit","value":"10"}]}},
+					"response": []
+				},
+				{
+					"name": "List Expenses (Filtered)",
+					"request": {"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/expenses?group_uuid={{group_uuid}}&user_uuid={{user1_uuid}}&split_type=equal&from_date=2025-01-01&to_date=2025-12-31&page=1&limit=10","host":["{{base_url}}"],"path":["api","v1","expenses"],"query":[{"key":"group_uuid","value":"{{group_uuid}}"},{"key":"user_uuid","value":"{{user1_uuid}}"},{"key":"split_type","value":"equal"},{"key":"from_date","value":"2025-01-01"},{"key":"to_date","value":"2025-12-31"},{"key":"page","value":"1"},{"key":"limit","value":"10"}]}},
+					"response": []
+				},
+				
+				{
+					"name": "Get Group Expenses",
+					"request": {"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/groups/{{group_uuid}}/expenses?page=1&limit=10","host":["{{base_url}}"],"path":["api","v1","groups","{{group_uuid}}","expenses"],"query":[{"key":"page","value":"1"},{"key":"limit","value":"10"}]}},
+					"response": []
+				},
+				{
+					"name": "Get User Expenses",
+					"request": {"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/users/{{user1_uuid}}/expenses?page=1&limit=10","host":["{{base_url}}"],"path":["api","v1","users","{{user1_uuid}}","expenses"],"query":[{"key":"page","value":"1"},{"key":"limit","value":"10"}]}},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Settlements",
+			"item": [
+				{"name":"Create Settlement","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"},{"key":"Idempotency-Key","value":"{{idempotency_key}}"}],"body":{"mode":"raw","raw":"{\n  \"group_uuid\": \"{{group_uuid}}\",\n  \"from_user_uuid\": \"{{user2_uuid}}\",\n  \"to_user_uuid\": \"{{user1_uuid}}\",\n  \"amount\": \"50.00\",\n  \"currency\": \"USD\"\n}"},"url":{"raw":"{{base_url}}/api/v1/settlements","host":["{{base_url}}"],"path":["api","v1","settlements"]}},"response":[]},
+				{"name":"List Settlements","request":{"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/settlements?page=1&limit=10","host":["{{base_url}}"],"path":["api","v1","settlements"],"query":[{"key":"page","value":"1"},{"key":"limit","value":"10"}]}},"response":[]},
+				{"name":"Get Settlement","request":{"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/settlements/{{settlement_uuid}}","host":["{{base_url}}"],"path":["api","v1","settlements","{{settlement_uuid}}"]}},"response":[]},
+				{"name":"Get Group Settlements","request":{"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/groups/{{group_uuid}}/settlements?page=1&limit=10","host":["{{base_url}}"],"path":["api","v1","groups","{{group_uuid}}","settlements"],"query":[{"key":"page","value":"1"},{"key":"limit","value":"10"}]}},"response":[]},
+				{"name":"Get User Settlements","request":{"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/users/{{user1_uuid}}/settlements?page=1&limit=10","host":["{{base_url}}"],"path":["api","v1","users","{{user1_uuid}}","settlements"],"query":[{"key":"page","value":"1"},{"key":"limit","value":"10"}]}},"response":[]},
+				{"name":"Simplify Debts","request":{"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/groups/{{group_uuid}}/simplify-debts","host":["{{base_url}}"],"path":["api","v1","groups","{{group_uuid}}","simplify-debts"]}},"response":[]}
+			]
+		},
+		{
+			"name": "Balances",
+			"item": [
+				{"name":"Get Group Balance Sheet","request":{"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/groups/{{group_uuid}}/balance-sheet","host":["{{base_url}}"],"path":["api","v1","groups","{{group_uuid}}","balance-sheet"]}},"response":[]},
+				{"name":"Get User Balance in Group","request":{"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/groups/{{group_uuid}}/users/{{user2_uuid}}/balance","host":["{{base_url}}"],"path":["api","v1","groups","{{group_uuid}}","users","{{user2_uuid}}","balance"]}},"response":[]},
+				
+				{"name":"Get Debt Relationships","request":{"method":"GET","header":[],"url":{"raw":"{{base_url}}/api/v1/groups/{{group_uuid}}/debt-relationships","host":["{{base_url}}"],"path":["api","v1","groups","{{group_uuid}}","debt-relationships"]}},"response":[]}
+			]
+		},
+		{
+			"name": "Test Scenarios",
+			"item": [
+				{
+					"name": "Test Case 1: Equal Split",
+					"item": [
+						
+						{
+							"name": "1. Add Equal Split Expense ($90)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.globals.set(\"idempotency_key\", pm.variables.replaceIn('{{$guid}}'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Idempotency-Key",
+										"value": "{{idempotency_key}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"group_uuid\": \"{{group_uuid}}\",\n  \"paid_by_uuid\": \"{{user1_uuid}}\",\n  \"amount\": \"90.00\",\n  \"currency\": \"USD\",\n  \"description\": \"Dinner at restaurant\",\n  \"split_type\": \"equal\",\n  \"splits\": [\n    {\"user_uuid\": \"{{user1_uuid}}\"},\n    {\"user_uuid\": \"{{user2_uuid}}\"},\n    {\"user_uuid\": \"{{user3_uuid}}\"}\n  ]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/expenses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"expenses"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test Case 2: Exact Amount Split",
+					"item": [
+						{
+							"name": "Add Exact Amount Expense ($100)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.globals.set(\"idempotency_key\", pm.variables.replaceIn('{{$guid}}'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Idempotency-Key",
+										"value": "{{idempotency_key}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"group_uuid\": \"{{group_uuid}}\",\n  \"paid_by_uuid\": \"{{user1_uuid}}\",\n  \"amount\": \"100.00\",\n  \"currency\": \"USD\",\n  \"description\": \"Groceries\",\n  \"split_type\": \"exact\",\n  \"splits\": [\n    {\"user_uuid\": \"{{user1_uuid}}\", \"amount\": \"70.00\"},\n    {\"user_uuid\": \"{{user2_uuid}}\", \"amount\": \"30.00\"}\n  ]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/expenses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"expenses"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test Case 3: Percentage Split",
+					"item": [
+						{
+							"name": "Add Percentage Split Expense ($200)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.globals.set(\"idempotency_key\", pm.variables.replaceIn('{{$guid}}'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Idempotency-Key",
+										"value": "{{idempotency_key}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"group_uuid\": \"{{group_uuid}}\",\n  \"paid_by_uuid\": \"{{user1_uuid}}\",\n  \"amount\": \"200.00\",\n  \"currency\": \"USD\",\n  \"description\": \"Shopping trip\",\n  \"split_type\": \"percentage\",\n  \"splits\": [\n    {\"user_uuid\": \"{{user1_uuid}}\", \"percentage\": \"60.00\"},\n    {\"user_uuid\": \"{{user2_uuid}}\", \"percentage\": \"40.00\"}\n  ]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/expenses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"expenses"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test Case 4: Settlement",
+					"item": [
+						{
+							"name": "Settle Debt ($50)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.globals.set(\"idempotency_key\", pm.variables.replaceIn('{{$guid}}'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Idempotency-Key",
+										"value": "{{idempotency_key}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"group_uuid\": \"{{group_uuid}}\",\n  \"from_user_uuid\": \"{{user2_uuid}}\",\n  \"to_user_uuid\": \"{{user1_uuid}}\",\n  \"amount\": \"50.00\",\n  \"currency\": \"USD\",\n  \"description\": \"Partial payment for expenses\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/settlements",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"settlements"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "user_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "group_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user1_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user2_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user3_uuid",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

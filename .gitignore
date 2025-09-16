@@ -1,0 +1,42 @@
+# Binaries and build artifacts
+bin/
+build/
+dist/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go build cache and modules
+/vendor/
+
+/Makefile
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/editor directories
+.vscode/
+.idea/
+*.iml
+
+# Environment and secrets
+config.env
+.env
+.env.*
+
+# Generated docs
+/docs/swagger/
+
+# Coverage and test outputs
+coverage.out
+coverage/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
