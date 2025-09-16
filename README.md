@@ -4,7 +4,7 @@ A robust expense splitting application built with Go, featuring advanced debt ma
 
 ## Postman Documentation
 
-- Link: [https://www.loom.com/share/00000000000000000000000000000000
+- Link: [https://galactic-shadow-957901.postman.co/workspace/New-Team-Workspace~763b5af6-1599-4d05-a40e-ac0ac2457cdc/collection/24302902-6922c2b5-b44b-46dc-a849-a05efa93113f?action=share&creator=24302902
 ](https://galactic-shadow-957901.postman.co/workspace/New-Team-Workspace~763b5af6-1599-4d05-a40e-ac0ac2457cdc/collection/24302902-6922c2b5-b44b-46dc-a849-a05efa93113f?action=share&creator=24302902)
 ## Features
 
