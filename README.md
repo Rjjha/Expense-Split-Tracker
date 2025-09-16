@@ -6,6 +6,12 @@ A robust expense splitting application built with Go, featuring advanced debt ma
 
 - Link: [https://galactic-shadow-957901.postman.co/workspace/New-Team-Workspace~763b5af6-1599-4d05-a40e-ac0ac2457cdc/collection/24302902-6922c2b5-b44b-46dc-a849-a05efa93113f?action=share&creator=24302902
 ](https://galactic-shadow-957901.postman.co/workspace/New-Team-Workspace~763b5af6-1599-4d05-a40e-ac0ac2457cdc/collection/24302902-6922c2b5-b44b-46dc-a849-a05efa93113f?action=share&creator=24302902)
+
+## Loom Video (Demo)
+
+- Demo link: https://www.loom.com/share/c7813d2bfa7c4891ab3c6f1bc36313a7?sid=1b85cc32-2b22-45e3-8574-07b277e7193c
+
+
 ## Features
 
 ### Core Features
@@ -236,6 +242,12 @@ go test -cover ./...
 - **Validation**: UUIDs, currencies, amounts, and membership checks at each step.
 - **Pagination & Limits**: Defensive defaults for list endpoints.
 
+## Challenges and Trade-offs
+
+- **Rounding correctness**: Equal/percentage splits round to 2 decimals; any remainder is assigned to the last split to keep totals exact.
+- **Currency handling**: Decimal math with currency validation; simplification assumes a single-currency context per group. Multi-currency netting would need FX and timestamped rates.
+- **Debt simplification algorithm**: Greedy largest-debtor ↔ largest-creditor approach for speed and simplicity. Optimal minimal transactions (graph optimization) are possible but add complexity/runtime.
+- **Idempotency scope**: Applied only to financial mutations (expenses, settlements) to balance safety with performance overhead.
 
 ## Performance Considerations
 
